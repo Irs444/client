@@ -1,95 +1,84 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import React from 'react';
+import { Box, Button, Card, FormControl, FormLabel, Grid2, Link, TextField, Typography } from '@mui/material'
+import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+const style = {
+
+  backgroundColor: '#d32f2f',
+  color: "white",
+  fontWeight: "bold",
+  '&:hover': {
+    backgroundColor: '#c62828',
+  }
 }
+
+const page = () => {
+
+ const router = useRouter()
+
+  const loginForm = useFormik({
+    initialValues:{
+      email:"",
+      password:""
+    },
+    onSubmit: async(values, {resetForm}) => {
+      console.log(values);
+      resetForm()
+
+      const res = await fetch("http://localhost:5000/api/v1/login", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers:{
+          "Content-Type":'application/json'
+        }
+      })
+      
+      if(res.status === 200){
+        const data = await res.json()
+        console.log(data);
+        alert("User loggedIn Successfully")
+        router.push("/main/book")
+        
+      }
+    }
+  })
+  return (
+    <div>
+      <Grid2 container>
+        <Grid2 item size={{ lg: 12, md: 12, sm: 12, xs: 12 }} sx={{ backgroundColor: "gray", display: "flex", justifyContent: "center", alignItems: 'center', height: '100vh' }}>
+          <Card sx={{ width: "30%", backgroundColor: "white", padding: "40px" }}>
+            <Typography variant='h4' component="h1">SignIn</Typography>
+
+
+            <Box component="form" sx={{ display: "flex", flexDirection: "column" }} onSubmit={loginForm.handleSubmit}>
+
+              <FormControl sx={{my:3}}>
+                <FormLabel>Email</FormLabel>
+                <TextField size='small' type='text' color='red' id='email' value={loginForm.values.email} onChange={loginForm.handleChange} />
+              </FormControl>
+
+              <FormControl sx={{mb:3}}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <FormLabel>Password</FormLabel>
+                  <Link href="" variant='body1' sx={{color:"#ef5350", textDecoration:"none"}}>Forget Password</Link>
+                </Box>
+                <TextField size='small' type='password' color='red' id='password' value={loginForm.values.password} onChange={loginForm.handleChange}/>
+              </FormControl>
+
+              <Button type='submit' size='small' sx={style}>SignIn</Button>
+
+            </Box>
+
+
+          </Card>
+        </Grid2>
+
+      </Grid2>
+    </div>
+  )
+}
+
+export default page
