@@ -50,36 +50,6 @@ const page = () => {
   })
   return (
     <div>
-      {/* <Grid2 container>
-        <Grid2 item size={{ lg: 12, md: 12, sm: 12, xs: 12 }} sx={{ backgroundColor: "gray", display: "flex", justifyContent: "center", alignItems: 'center', height: '100vh' }}>
-          <Card sx={{ width: "30%", backgroundColor: "white", padding: "40px" }}>
-            <Typography variant='h4' component="h1">SignIn</Typography>
-
-
-            <Box component="form" sx={{ display: "flex", flexDirection: "column" }} onSubmit={loginForm.handleSubmit}>
-
-              <FormControl sx={{my:3}}>
-                <FormLabel>Email</FormLabel>
-                <TextField size='small' type='text' color='red' id='email' value={loginForm.values.email} onChange={loginForm.handleChange} />
-              </FormControl>
-
-              <FormControl sx={{mb:3}}>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <FormLabel>Password</FormLabel>
-                  <Link href="" variant='body1' sx={{color:"#ef5350", textDecoration:"none"}}>Forget Password</Link>
-                </Box>
-                <TextField size='small' type='password' color='red' id='password' value={loginForm.values.password} onChange={loginForm.handleChange}/>
-              </FormControl>
-
-              <Button type='submit' size='small' sx={style}>SignIn</Button>
-
-            </Box>
-
-
-          </Card>
-        </Grid2>
-
-      </Grid2> */}
       <Grid2 container className={classes.container}>
         <Grid2 container size={12} spacing={3} >
           <Grid2 item size={{ lg: 6, md: 6, sm: 12, xs: 12 }} sx={{ backgroundColor: "red" }}>
