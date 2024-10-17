@@ -1,11 +1,11 @@
 import React from 'react'
 import Sidebar from './sidebar'
 
-const layout = ({children}) => {
+const layout = () => {
   return (
     <div>
         <Sidebar/>
-       {children}
+       
     </div>
   )
 }
